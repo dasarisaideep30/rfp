@@ -1,0 +1,12 @@
+[build]
+  command = "npm install --prefix backend && npx prisma generate --schema=backend/prisma/schema.prisma && npm install --prefix frontend && npm run build --prefix frontend"
+  publish = "frontend/dist"
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+
+
+[build.environment]
+  NODE_VERSION = "20"
