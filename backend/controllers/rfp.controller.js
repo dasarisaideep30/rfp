@@ -196,16 +196,14 @@ const createRFP = async (req, res) => {
             {
               title: 'Review Initial Requirements',
               description: `Review the initial requirements and RFP details for ${clientName}`,
-              status: 'PENDING',
-              priority: 'HIGH',
+              status: 'NOT_STARTED',
               dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days
               ownerId: req.user.id
             },
             {
               title: 'Draft Technical Architecture',
               description: `Prepare the technical solution outline for the proposal`,
-              status: 'PENDING',
-              priority: 'HIGH',
+              status: 'NOT_STARTED',
               dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days
               ownerId: solutionArchitectId || req.user.id
             }
