@@ -15,7 +15,7 @@ const getAllRFPs = async (req, res) => {
   try {
     const { status, riskLevel, search } = req.query;
     const userId = req.user.id;
-    const isAdmin = req.user.email === 'sarah.johnson@gmail.com';
+    const isAdmin = req.user.role === 'ADMIN';
     
     // Privacy conditions: strictly RFPs created by the user (proposalManagerId) unless Admin
     const privacyConditions = isAdmin ? {} : { proposalManagerId: userId };

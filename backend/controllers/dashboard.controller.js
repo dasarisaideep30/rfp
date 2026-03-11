@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 const getExecutiveDashboard = async (req, res) => {
   try {
     const userId = req.user.id;
-    const isAdmin = req.user.email === 'sarah.johnson@gmail.com';
+    const isAdmin = req.user.role === 'ADMIN';
 
     // Base filter for privacy (Strictly RFPs created by me unless Admin)
     const privacyFilter = isAdmin ? {} : { proposalManagerId: userId };

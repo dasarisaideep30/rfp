@@ -486,84 +486,158 @@ const RFPList = ({ initialRfps, loading: propLoading, onViewRFP, onCreateRFP, on
                 e.stopPropagation();
                 setShowFilters(!showFilters);
               }}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0.65rem 1.25rem', border: '1px solid #e2e8f0', background: 'white', fontWeight: 700 }}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px', 
+                padding: '0.75rem 1.5rem', 
+                border: '1px solid #e2e8f0', 
+                background: 'white', 
+                fontWeight: 800,
+                borderRadius: '10px',
+                boxShadow: showFilters ? '0 0 0 2px #dbeafe' : 'none',
+                transition: 'all 0.2s ease'
+              }}
             >
               <Filter size={18} />
-              Filter
+              Filter Options
             </button>
 
             {showFilters && (
               <div style={{
                 position: 'absolute',
-                top: '115%',
+                top: 'calc(100% + 12px)',
                 right: 0,
                 background: 'white',
-                borderRadius: '12px',
-                boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-                padding: '1.5rem',
-                minWidth: '280px',
-                zIndex: 100,
-                border: '1px solid #f1f5f9'
+                borderRadius: '16px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+                padding: '1.75rem',
+                minWidth: '350px',
+                zIndex: 1000,
+                border: '1px solid #f1f5f9',
+                animation: 'slideUp 0.3s ease-out'
               }} onClick={e => e.stopPropagation()}>
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.05em' }}>Filter by Risk</label>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    {['ALL', 'GREEN', 'AMBER', 'RED'].map(lvl => (
-                      <button 
-                        key={lvl}
-                        onClick={() => { setFilterType(lvl === 'ALL' ? 'ALL' : `RISK:${lvl}`); setShowFilters(false); }}
-                        style={{
-                          padding: '0.5rem 0.85rem',
-                          borderRadius: '8px',
-                          fontSize: '0.85rem',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          border: (filterType === lvl || filterType === `RISK:${lvl}`) ? '1.5px solid #2563eb' : '1px solid #e2e8f0',
-                          background: (filterType === lvl || filterType === `RISK:${lvl}`) ? '#eff6ff' : 'white',
-                          color: (filterType === lvl || filterType === `RISK:${lvl}`) ? '#2563eb' : '#64748b',
-                          transition: 'all 0.2s'
-                        }}
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                  {/* Column 1 */}
+                  <div>
+                    <div style={{ marginBottom: '1.75rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.1em' }}>Risk Profile</label>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        {['ALL', 'GREEN', 'AMBER', 'RED'].map(lvl => (
+                          <button 
+                            key={lvl}
+                            onClick={() => setFilterType(lvl === 'ALL' ? 'ALL' : `RISK:${lvl}`)}
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.65rem 1rem',
+                              borderRadius: '8px',
+                              fontSize: '0.85rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              border: '1px solid',
+                              borderColor: (filterType === lvl || filterType === `RISK:${lvl}`) ? '#2563eb' : 'transparent',
+                              background: (filterType === lvl || filterType === `RISK:${lvl}`) ? '#eff6ff' : 'transparent',
+                              color: (filterType === lvl || filterType === `RISK:${lvl}`) ? '#2563eb' : '#64748b',
+                              transition: 'all 0.2s'
+                            }}
+                          >
+                            <span style={{ 
+                              display: 'inline-block', 
+                              width: '10px', 
+                              height: '10px', 
+                              borderRadius: '50%', 
+                              marginRight: '10px',
+                              background: lvl === 'GREEN' ? '#10b981' : lvl === 'AMBER' ? '#f59e0b' : lvl === 'RED' ? '#ef4444' : '#cbd5e1'
+                            }}></span>
+                            {lvl === 'ALL' ? 'All Risks' : lvl}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.1em' }}>Timeframe</label>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                        {['Last 30 Days', 'This Quarter', 'Next 12 Months'].map(time => (
+                          <button 
+                            key={time}
+                            onClick={() => setFilterType(`DATE:${time}`)}
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.5rem 0.75rem',
+                              borderRadius: '6px',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              cursor: 'pointer',
+                              border: 'none',
+                              background: filterType === `DATE:${time}` ? '#f1f5f9' : 'transparent',
+                              color: filterType === `DATE:${time}` ? '#0f172a' : '#64748b'
+                            }}
+                          >
+                            {time}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Column 2 */}
+                  <div>
+                    <div style={{ marginBottom: '1.75rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.1em' }}>Stage / Status</label>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                        {['INTAKE', 'PLANNING', 'IN_PROGRESS', 'REVIEW', 'SUBMITTED', 'APPROVED', 'REJECTED'].map(st => (
+                          <button 
+                            key={st}
+                            onClick={() => setFilterType(`STATUS:${st}`)}
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.5rem 0.75rem',
+                              borderRadius: '6px',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              cursor: 'pointer',
+                              border: 'none',
+                              background: filterType === `STATUS:${st}` ? '#f1f5f9' : 'transparent',
+                              color: filterType === `STATUS:${st}` ? '#0f172a' : '#64748b'
+                            }}
+                          >
+                            {st.replace('_', ' ')}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.1em' }}>Verticals</label>
+                      <select 
+                        onChange={(e) => setFilterType(`INDUSTRY:${e.target.value}`)}
+                        className="form-select"
+                        style={{ padding: '0.5rem', fontSize: '0.85rem', fontWeight: 700 }}
                       >
-                        {lvl}
-                      </button>
-                    ))}
+                        <option value="">All Industries</option>
+                        <option value="Financial Services">Financial Services</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Healthcare">Healthcare</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.05em' }}>Filter by Status</label>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    {['INTAKE', 'PLANNING', 'IN_PROGRESS', 'REVIEW', 'APPROVED', 'REJECTED'].map(st => (
-                      <button 
-                        key={st}
-                        onClick={() => { setFilterType(`STATUS:${st}`); setShowFilters(false); }}
-                        style={{
-                          textAlign: 'left',
-                          padding: '0.65rem 1rem',
-                          borderRadius: '8px',
-                          fontSize: '0.9rem',
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                          border: filterType === `STATUS:${st}` ? '1.5px solid #2563eb' : '1px solid transparent',
-                          background: filterType === `STATUS:${st}` ? '#eff6ff' : 'transparent',
-                          color: filterType === `STATUS:${st}` ? '#2563eb' : '#475569',
-                          transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => { if (filterType !== `STATUS:${st}`) e.target.style.background = '#f8fafc'; }}
-                        onMouseLeave={(e) => { if (filterType !== `STATUS:${st}`) e.target.style.background = 'transparent'; }}
-                      >
-                        {st.replace('_', ' ')}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <button 
                     onClick={() => { setFilterType('ALL'); setShowFilters(false); }}
-                    style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: 'none', background: '#f8fafc', color: '#64748b', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                    style={{ background: 'none', border: 'none', color: '#ef4444', fontWeight: 800, fontSize: '0.85rem', cursor: 'pointer' }}
                   >
-                    Reset All Filters
+                    Clear All
+                  </button>
+                  <button 
+                    onClick={() => setShowFilters(false)}
+                    className="btn btn-primary"
+                    style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem' }}
+                  >
+                    Apply Filters
                   </button>
                 </div>
               </div>
@@ -1108,16 +1182,34 @@ const CreateRFPForm = ({ onCancel, onSuccess }) => {
             </button>
           </div>
 
-          <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label">Executive Summary</label>
+          <div className="form-group" style={{ gridColumn: 'span 2' }}>
+            <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              Executive Summary 
+              <button 
+                type="button" 
+                className="btn btn-secondary" 
+                onClick={handleAIGenerate}
+                disabled={aiGenerating}
+                style={{ 
+                  padding: '0.4rem 0.8rem', 
+                  fontSize: '0.75rem', 
+                  gap: '6px', 
+                  color: '#7c3aed', 
+                  borderColor: '#ddd6fe',
+                  background: '#f5f3ff'
+                }}
+              >
+                <Zap size={14} fill="#7c3aed" />
+                {aiGenerating ? 'AI Analyzing...' : 'Magic Autofill'}
+              </button>
+            </label>
             <textarea
               name="executiveSummary"
               className="form-textarea"
-              placeholder="The summarized (or elaborated) proposal will appear here..."
-              rows="10"
+              placeholder="Briefly describe the proposal goals and solution approach..."
               value={formData.executiveSummary}
               onChange={handleChange}
-              style={{ height: 'calc(100% - 28px)' }}
+              style={{ minHeight: '150px' }}
             />
           </div>
         </div>
