@@ -3,8 +3,7 @@
  * Manages RFP lifecycle, risk calculation, and governance
  */
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
 const { calculateRiskLevel, calculateCompletionPercentage, generateMilestones } = require('../utils/riskEngine');
 
 /**
