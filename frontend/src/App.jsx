@@ -841,9 +841,34 @@ const RFPDetail = ({ rfpId, onBack }) => {
 
             <div style={{ marginBottom: '2rem' }}>
               <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Current Status</div>
-              <span className={`status-badge status-${rfp.status.toLowerCase()}`} style={{ fontSize: '0.85rem', padding: '0.6rem 1.25rem' }}>
-                {rfp.status.replace('_', ' ')}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                <span className={`status-badge status-${rfp.status.toLowerCase()}`} style={{ fontSize: '0.85rem', padding: '0.6rem 1.25rem' }}>
+                  {rfp.status.replace('_', ' ')}
+                </span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button 
+                    className="btn btn-primary" 
+                    style={{ background: '#10b981', borderColor: '#10b981', padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                    onClick={() => handleUpdateStatus('APPROVED')}
+                  >
+                    Approve
+                  </button>
+                  <button 
+                    className="btn btn-secondary" 
+                    style={{ color: '#ef4444', borderColor: '#fee2e2', background: '#fef2f2', padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                    onClick={() => handleUpdateStatus('REJECTED')}
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+              <button 
+                className="btn btn-secondary" 
+                style={{ width: '100%', marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }} 
+                onClick={() => handleUpdateStatus('SUBMITTED')}
+              >
+                Submit Proposal
+              </button>
             </div>
 
             <div style={{ marginBottom: '2rem' }}>
