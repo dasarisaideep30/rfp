@@ -156,9 +156,13 @@ const getExecutiveDashboard = async (req, res) => {
         ]
       },
       orderBy: { createdAt: 'desc' },
-      include: {
+      select: {
+        id: true,
+        action: true,
+        description: true,
+        createdAt: true,
         user: {
-          select: { firstName: true, lastName: true, email: true }
+          select: { firstName: true, lastName: true }
         },
         rfp: {
           select: { rfpNumber: true, clientName: true }
