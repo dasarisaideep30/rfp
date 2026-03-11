@@ -12,8 +12,13 @@ function calculateRiskLevel(rfp, tasks = [], milestones = []) {
   let riskScore = 0;
 
   // Factor 1: Deadline proximity (0-30 points)
+  const deadline = new Date(rfp.submissionDeadline);
+  deadline.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const daysUntilDeadline = Math.floor(
-    (new Date(rfp.submissionDeadline) - new Date()) / (1000 * 60 * 60 * 24)
+    (deadline - today) / (1000 * 60 * 60 * 24)
   );
   
   if (daysUntilDeadline < 0) {

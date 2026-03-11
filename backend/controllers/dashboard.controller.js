@@ -37,7 +37,7 @@ const getExecutiveDashboard = async (req, res) => {
     const pipelineValue = await prisma.rFP.aggregate({
       where: {
         status: {
-          notIn: ['LOST']
+          notIn: ['WON', 'LOST']
         }
       },
       _sum: {
@@ -127,7 +127,7 @@ const getExecutiveDashboard = async (req, res) => {
       by: ['industry'],
       where: {
         status: {
-          notIn: ['LOST']
+          notIn: ['WON', 'LOST']
         }
       },
       _sum: {

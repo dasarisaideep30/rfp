@@ -425,7 +425,7 @@ const RFPList = ({ initialRfps, loading: propLoading, onViewRFP, onCreateRFP, on
   const [rfps, setRfps] = useState(initialRfps || []);
   const [loading, setLoading] = useState(!initialRfps);
   const [search, setSearch] = useState('');
-  const [filterType, setFilterType] = useState('ALL'); // ALL, RISK:RED, RISK:AMBER, STATUS:IN_PROGRESS, STATUS:REVIEW
+  const [filterType, setFilterType] = useState('ALL'); // ALL, RISK:*, STATUS:*, DATE:*
 
   useEffect(() => {
     if (initialRfps && !search) {
@@ -497,6 +497,10 @@ const RFPList = ({ initialRfps, loading: propLoading, onViewRFP, onCreateRFP, on
                 <option value="STATUS:IN_PROGRESS">In Progress</option>
                 <option value="STATUS:REVIEW">Review</option>
               </optgroup>
+              <optgroup label="By Deadline">
+                <option value="DATE:UPCOMING">Upcoming (Next 30 Days)</option>
+                <option value="DATE:PAST">Past Deadline</option>
+              </optgroup>
             </select>
             <Filter size={16} color="#64748b" style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
           </div>
@@ -537,6 +541,17 @@ const RFPList = ({ initialRfps, loading: propLoading, onViewRFP, onCreateRFP, on
                     if (filterType === 'ALL') return true;
                     if (filterType.startsWith('RISK:')) return rfp.riskLevel === filterType.split(':')[1];
                     if (filterType.startsWith('STATUS:')) return rfp.status === filterType.split(':')[1];
+                    if (filterType.startsWith('DATE:')) {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0); // Normalize to start of today
+                      const deadline = new Date(rfp.submissionDeadline);
+                      if (filterType === 'DATE:PAST') return deadline < today;
+                      if (filterType === 'DATE:UPCOMING') {
+                        const thirtyDays = new Date(today);
+                        thirtyDays.setDate(thirtyDays.getDate() + 30);
+                        return deadline >= today && deadline <= thirtyDays;
+                      }
+                    }
                     return true;
                   });
 
