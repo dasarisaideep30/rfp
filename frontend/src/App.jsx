@@ -1,5 +1,5 @@
 /**
- * Deloitte RFP Command Center - Frontend Application
+ * RFP Command Center - Frontend Application
  * Enterprise-Grade React Application with Full Feature Set
  */
 
@@ -28,7 +28,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 // MOCK DATA & API FALLBACK (For Database-less Deployment)
 // ============================================
 
-const MOCK_STORAGE_KEY = 'deloitte_rfp_mock_data';
+const MOCK_STORAGE_KEY = 'rfp_mock_data';
 
 const getMockData = () => {
   const data = localStorage.getItem(MOCK_STORAGE_KEY);
@@ -50,7 +50,7 @@ const getMockData = () => {
         milestones: []
       }
     ],
-    user: { id: 'mock-user', firstName: 'Guest', lastName: 'User', email: 'guest@deloitte.com', role: 'PROPOSAL_MANAGER' }
+    user: { id: 'mock-user', firstName: 'Guest', lastName: 'User', email: 'guest@example.com', role: 'PROPOSAL_MANAGER' }
   };
 };
 
@@ -333,7 +333,7 @@ const Login = () => {
               <FileText size={42} />
             </div>
           </div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>Deloitte RFP</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>Enterprise RFP</h1>
           <p style={{ color: '#64748b', marginTop: '0.5rem', fontWeight: 600 }}>Command Center Enterprise</p>
         </div>
 
@@ -1315,7 +1315,7 @@ const SettingsView = () => {
         <h3 style={{ fontWeight: 800, marginBottom: '2rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>Organization</h3>
         <div className="form-group">
           <label className="form-label">Organization Name</label>
-          <input type="text" className="form-input" value="Deloitte Enterprise" disabled style={{ fontWeight: 600 }} />
+          <input type="text" className="form-input" value="Enterprise" disabled style={{ fontWeight: 600 }} />
         </div>
       </div>
 
