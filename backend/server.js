@@ -115,7 +115,7 @@ if (require.main === module) {
     console.log('🚀 RFP Command Center API');
     console.log('==============================================');
     console.log(`📡 Server running on port ${PORT}`);
-    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'} [DEBUG-VER-001]`);
     console.log(`🔗 Health check: http://localhost:${PORT}/health`);
     console.log('==============================================');
   });

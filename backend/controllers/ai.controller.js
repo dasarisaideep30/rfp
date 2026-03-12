@@ -14,8 +14,6 @@ const analyzeRFP = async (req, res) => {
       return res.status(400).json({ error: 'Document text is required for analysis' });
     }
 
-    const ai = new GoogleGenAI({ apiKey: aiKey });
-    
     // Estimate logical size (basic word count heuristic)
     const wordCount = documentText.split(/\s+/).length;
     let systemInstruction = "";
@@ -38,20 +36,25 @@ const analyzeRFP = async (req, res) => {
       `;
     }
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-pro',
-      contents: documentText,
+    const client = new GoogleGenAI({ apiKey: aiKey });
+    console.log(`[AI-DEBUG-VER-002] Attempting analysis with model: gemini-2.0-flash...`);
+
+    const result = await client.models.generateContent({
+      model: 'gemini-2.0-flash',
+      contents: [{ role: 'user', parts: [{ text: documentText }] }],
       config: {
         systemInstruction: systemInstruction,
-        temperature: 0.2, // Keep it highly accurate and analytical
+        temperature: 0.2
       }
     });
+    
+    const responseText = result.response.text();
 
     return res.status(200).json({
       success: true,
       analysisType: wordCount > 5000 ? 'SUMMARIZATION' : 'ELABORATION',
       originalWordCount: wordCount,
-      aiResponse: response.text
+      result: responseText
     });
 
   } catch (error) {
