@@ -36,17 +36,15 @@ const analyzeRFP = async (req, res) => {
       `;
     }
 
-    const genAI = new GoogleGenAI(aiKey);
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-pro",
-    });
+    const client = new GoogleGenAI({ apiKey: aiKey });
 
-    const result = await model.generateContent({
+    const result = await client.models.generateContent({
+      model: 'gemini-1.5-pro',
       contents: [{ role: 'user', parts: [{ text: documentText }] }],
-      generationConfig: {
-        temperature: 0.2,
-      },
-      systemInstruction: systemInstruction
+      config: {
+        systemInstruction: systemInstruction,
+        temperature: 0.2
+      }
     });
     
     const responseText = result.response.text();
